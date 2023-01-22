@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>Inter Name And Amount</h1>
+    <style>
+        h1{
+    font-family: arial, sans-serif;
+    font-size: 20px;
+        }
+    </style>
+    <form action="/buy" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto"  name="symbol" placeholder="Name Of Stock" type="text">
+        </div>
+
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Amount Of Shares" type="number">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Purchase</button>
+    </form>
+{% endblock %}
