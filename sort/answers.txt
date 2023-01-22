@@ -1,0 +1,11 @@
+sort1 uses: Bubble sort.
+
+How do you know?: Is has the slowest sorting time sorting random50000, and the fastest sorting time sorting sorted50000.
+
+sort2 uses: Merge sort.
+
+How do you know?: It has the fastest sorting time sorting random50000, and slower than bubble but faster than selection sorting sorted50000.
+
+sort3 uses: selection sort
+
+How do you know?: Is is slower than merge but faster than bubble sorting random 50000, and the slowest sorting time sorting sorted50000.
