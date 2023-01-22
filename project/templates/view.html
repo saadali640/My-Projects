@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    view post
+{% endblock %}
+
+{% block main %}
+
+<div class="row mx-1">
+    {% for row in db %}
+      <div class="card" style="width: 50rem; margin-left: 245px; margin-bottom: 30px;">
+        {% set img = row["postimg"] %}
+        <img class="card-img-top" src="{{ img }}" alt="error">
+        <div class="card-body">
+          {% set id = row["user_id"] %}
+          <h5 class="card-title" style="text-align: left;">
+            <div class="circular_image_post">
+              <img src="{{userpic}}" alt="Profile Pic">
+            </div>
+            <a href="/oup/{{id}}" style="text-decoration:none">@{{row["user_username"]}}</a>: {{row["posttxt"]}}</h5>
+          {% set postID = row["id"] %}
+           {% if liked %}
+            <a style="border:none; background-color:white; text-decoration:none" class="bi bi-heart-fill" href="/remove/{{postID}}"> {{row["likes"]}}</a>
+           {% else %}
+            <a style="border:none; background-color:white; text-decoration:none" class="bi bi-heart" href="/add/{{postID}}"> {{row["likes"]}}</a>
+           {% endif %}
+           <ul>
+            {% for row in comments %}
+            <li style="text-align: left"><a href="/oup/{{id}}" style="text-decoration:none">@{{row["user_username"]}}</a>: {{row["comment"]}}</li>
+            {% endfor %}
+          </ul>
+            <form method="post" action="/comment/{{postID}}">
+             <input class="comment-box" type="text" name="comment" placeholder="Add Comment" autocomplete="off">
+            <input type="submit" class="button-8" value="Comment" style="margin-top: 15px;">
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+
+{% endblock %}

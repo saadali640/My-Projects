@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{user}}'s Profile
+{% endblock %}
+
+{% block main %}
+
+<style>
+
+  .container{
+    background-image: url("{{urlb}}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+   }
+
+</style>
+
+<div class="container">
+
+  <div class="circular_image">
+      <img src="{{urlp}}" alt="Profile Pic">
+    </div>
+    <div>
+      <strong style="color:white; font-size:30px;">@{{user}}</strong>
+      </div>
+  </div>
+
+    <div class="bio">
+    <p>{{bio}}</p>
+  </div>
+
+  <hr>
+
+
+  <div class="row mx-1">
+      {% for row in postdata %}
+      <div class="card" style="width: 42rem; margin: auto; margin-bottom: 30px;">
+        {% set postimg = row["postimg"] %}
+        <img class="card-img-top" src="{{postimg}}" alt="error">
+        <div class="card-body">
+            {% set id = row["user_id"] %}
+          <h5 class="card-title">Posted BY:<a href="/oup/{{id}}" style="text-decoration:none;">@{{user}}</a> On {{row["date"]}}</h5>
+          <p class="card-text">{{row["posttxt"]}}</p>
+          {% set postID = row["id"] %}
+          <a href="/view/{{postID}}" style="margin-top: 15px; text-decoration:none;">View Post</a>
+        </div>
+      </div>
+       {% endfor %}
+      </div>
+
+
+
+{% endblock %}

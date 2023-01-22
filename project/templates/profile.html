@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block main %}
+
+<style>
+
+  .container{
+    background-image: url("{{urlb}}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+   }
+
+</style>
+
+<div class="container">
+  {% if notedit %}
+   <form method="post" action="/profile">
+     <input type="submit" name="submit" value="Edit Profile" class="button-8" style="margin-left: 1000px;">
+   </form>
+  {% endif %}
+
+  <div class="circular_image">
+      <img src="{{urlp}}" alt="Profile Pic">
+    </div>
+    <div>
+      <strong style="color:white; font-size:30px;">@{{user}}</strong>
+      </div>
+  </div>
+
+    <div class="bio">
+    {% if notedit %}
+    <p>{{bio}}</p>
+    {% endif %}
+  </div>
+
+  {% if edit %}
+  <form method="post" action="/edit">
+    <div>
+
+      <h6 style="color:purple; margin-right:300px;">Set Profile Pic</h6>
+     <input type="text" name="urlp" placeholder="Paste Img URL Here" style="width:400px; height:auto;" autocomplete="off">
+
+     <h6 style="color:purple; margin-right:290px;">Set Background</h6>
+     <input type="text" name="urlb" placeholder="Paste Img URL Here" style="width:400px; height:auto;" autocomplete="off">
+
+    </div>
+    <h6 style="color:purple; margin-right:400px;">Set Bio</h6>
+    <input type="text" name="bio" value="{{bio}}" style="width:400px; height:auto;" autocomplete="off">
+    <input type="submit" value="Save" class="button-8">
+  </form>
+  {% endif %}
+
+  <hr>
+  {% if post %}
+  <form method="post" action="/profile">
+    <input type="submit" name="newpost" value="New Post" class="button-8" style="margin-left: 1000px;">
+  </form>
+  {% endif %}
+
+
+  {% if newpost %}
+  <form method="post" action="/newpost">
+    <div>
+
+      <h6 style="color:purple; margin-right:340px;">Post Pic</h6>
+     <input type="text" name="postimg" placeholder="Paste Img URL Here" style="width:400px; height:auto;" autocomplete="off">
+
+     <h6 style="color:purple; margin-right:290px;">Post Comment</h6>
+     <input type="text" name="posttxt" placeholder="Add Comment Here" style="width:400px; height:auto;" autocomplete="off">
+
+    </div>
+    <input type="submit" value="Post" class="button-8" style="margin-top:10px;">
+  </form>
+  {% endif %}
+
+
+
+  <div class="row mx-1">
+    {% if post %}
+      {% for row in postdata %}
+      <div class="card" style="width: 42rem; margin: auto; margin-bottom: 30px;">
+        {% set postimg = row["postimg"] %}
+        <img class="card-img-top" src="{{postimg}}" alt="error">
+        <div class="card-body">
+          <h5 class="card-title">Posted BY:<a href="/profile" style="text-decoration:none">@{{user}}</a> On {{row["date"]}}</h5>
+          <p class="card-text">{{row["posttxt"]}}</p>
+
+          {% set postID = row["id"] %}
+          <a href="/view/{{postID}}" style="margin-top: 15px; text-decoration:none">View Post</a>
+        </div>
+      </div>
+       {% endfor %}
+      {% endif %}
+      </div>
+
+
+
+{% endblock %}

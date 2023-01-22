@@ -1,0 +1,1 @@
+select name from people join ratings, movies, directors where rating >= 9.0 and ratings.movie_id = directors.movie_id and directors.person_id = people.id;

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block main %}
+  {% if home %}
+<div class="row mx-1">
+      {% for row in posts %}
+      <div class="card" style="width: 42rem; margin:auto; margin-bottom: 30px;">
+        {% set img = row["postimg"] %}
+        <img class="card-img-top" src="{{ img }}" alt="error">
+        <div class="card-body">
+          {% set id = row["user_id"] %}
+          <h5 class="card-title">Posted BY:<a href="/oup/{{id}}" style="text-decoration:none">@{{row["user_username"]}}</a> On {{row["date"]}}</h5>
+          <p class="card-text">{{row["posttxt"]}}</p>
+          {% set postID = row["id"] %}
+          <a href="/view/{{postID}}" style="margin-top: 15px; text-decoration:none">View Post</a>
+        </div>
+      </div>
+       {% endfor %}
+      </div>
+      {% else %}
+      <ul>
+        {% for user in results %}
+         {% set id = user["id"] %}
+         {% set userpic = user["profilepic"]%}
+        <li style="font-size:40px; text-align:left; color:blue;">
+          <div class="circular_image_post">
+            <img src="{{userpic}}" alt="Profile Pic">
+          </div>
+          <a href="/oup/{{id}}" style="text-decoration:none; color:blue">@{{user["username"]}}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+{% endblock %}
