@@ -1,0 +1,69 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2 style="margin-left: 630px; margin-top: 30px; margin-bottom:20px; color: #fde3e9;">Login</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username" style="width: 200px; margin:0 auto; text-align: center; background-color: #fde3e9;">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password" style="width: 200px; margin:0 auto; text-align: center; background-color: #fde3e9;">
+        </div>
+        <input class="button-8" type="submit" value="Login" style="margin-left: 650px;">
+    </form>
+
+    <div style="color: #fde3e9 ; margin-left: 545px; margin-top: 15px;"
+    >Don't have an account? <a href="{% url 'register' %}">Register here.</a></div>
+
+    <style>
+        .button-8 {
+    background-color: #fde3e9;
+    border-radius: 3px;
+    border: 1px solid #7aa7c7;
+    box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+    box-sizing: border-box;
+    color: #39739d;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.15385;
+    margin: 0;
+    outline: none;
+    padding: 8px .8em;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
+  }
+  
+  .button-8:hover,
+  .button-8:focus {
+    background-color: #b3d3ea;
+    color: #2c5777;
+  }
+  
+  .button-8:focus {
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  }
+  
+  .button-8:active {
+    background-color: #a0c7e4;
+    box-shadow: none;
+    color: #2c5777;
+  }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends "auctions/layout.html" %}
+
+{% block title%}
+{{ listing.model }} 
+{% endblock %}
+{% block body %}
+
+ {% if notactive %}
+<h6 style="color: #fde3e9;" ><strong style="color:blue;">@{{winner}}</strong> Has Won The Auction!</h6>
+ {% endif %}
+
+  {% if lowbid %}
+    <div class="alert alert-info" role="alert" style="text-align: center;">Bid Must Be Higher Than The Latest Bid</div>
+    {% elif bidadded %}
+    <div class="alert alert-info" role="alert" style="text-align: center;">Bid Added!</div>
+    {% endif %}
+    
+    <h2 style="margin-left: 40px; margin-bottom: 15px; color: #fde3e9;">{{ listing.model }}</h2>
+    
+<div style="width: 999px; height: 769px; background: rgba(250, 204, 232, 0.39); margin:auto">
+        <img style="margin-left: 170px; margin-top: 20px; width: 666px; height: 430px;" src="{{ listing.imageUrl }}" alt="{{ listing.brand }}">
+         <div>
+            <ul>
+                <li>Brand: {{ listing.brand }}</li>
+                <li>Model: {{ listing.model }}</li>
+                <li>{{ listing.description }}</li>
+                <li>Type: {{ listing.category1 }}</li>
+                <li>Price: ${{ listing.price }}</li>
+                {% if listing.isActive %}
+                <li>Available</li>
+                {% else %}
+                <li>Not Available</li>
+                {% endif %}
+                <li>Posted By: {{ listing.owner }}</li>
+            </ul>
+         </div>
+        
+        {% if user.is_authenticated %}
+         <div>
+          
+          {% if creator %}
+         <form action="{% url 'close' id=listing.id %}" method="post">
+          {% csrf_token %}
+          <input class="button-8" type="submit" value="Close Auction" style="margin-left:810px; margin-bottom: 10px;">
+          </form>
+          {% endif %}
+
+         {% if inlist %}
+         <form action="{% url 'remove' model=listing.model id=listing.id %}" method="post">
+          {% csrf_token %}
+          <input class="button-8" type="submit" value="Remove From Watchlist" style="margin-left:810px; margin-bottom: 10px;">
+          </form>
+
+          {% else %}
+          
+          <form action="{% url 'add' model=listing.model id=listing.id %}" method="post">
+            {% csrf_token %}
+          <input class="button-8" type="submit" value="Add To Watchlist" style="margin-left:810px; margin-bottom: 10px;">
+          </form>
+          {% endif %}
+          </div>
+        {% endif %}
+
+        
+
+
+</div>
+
+{% if user.is_authenticated %}
+ <div style="width: 999px; height: auto; background: rgba(250, 204, 232, 0.39); margin: auto; margin-top: 5px; border-style: groove; border-color: #fde3e9;">
+      <h3 style="margin-left: 8px; margin-top: 8px;">Bids: {{ bidscount }} {% if firstbid %}<h6 style="margin-left: 8px;">Be The First To Make A Bid!{% endif %}</h6></h3>
+     <ul>
+      {% for bid in bids %}
+       <li class="list-item"><strong style="color: blue;">@{{ bid.user }}:</strong> ${{ bid.bid }} - {{ bid.date }}</li>
+       {% endfor %}    
+      <ul>
+      
+                
+   </div>
+   {% endif %}
+
+   {% if user.is_authenticated %}
+   {% if allowbid %}
+      <form action="{% url 'view' model=listing.model id=listing.id %}"  method="POST">
+        {% csrf_token %}
+         <input type="number" id="bid" name="bid" min="1" style="margin-left: 165px;">
+        <input class="button-8" type="submit" value="Bid" style="margin-left:16px; margin-top: 10px;">
+        <label for="bid" style="color: #fde3e9">(Make Sure It's Higher Than The Latest Bid)</label>
+      </form>
+      {% endif %}
+        {% endif %}
+ 
+
+
+
+
+
+  {% if user.is_authenticated %}
+ <div style="width: 999px; height: auto; background: rgba(250, 204, 232, 0.39); margin: auto; margin-top: 5px; border-style: groove; border-color: #fde3e9;">
+      <h3 style="margin-left: 8px; margin-top: 8px;">Comments: {{ count }} {% if first %}<h6 style="margin-left: 8px;">Be The First To Comment!{% endif %}</h6></h3>
+     <ul>
+      {% for comment in comments %}
+       <li class="list-item"><strong style="color: blue;">@{{ comment.user }}:</strong> {{ comment }}</li>
+       {% endfor %}    
+      <ul>
+      
+                
+   </div>
+   {% endif %}
+
+
+
+      {% if user.is_authenticated %}
+      {% if allowcomment %}
+      <form action="{% url 'comment' id=listing.id %}"  method="POST">
+        {% csrf_token %}
+      <textarea class="form-control" name="comment" placeholder="Add A Comment" rows="4" style="width: 999px; margin: auto; height: 60px; margin-top: 10px;"></textarea>
+        <input class="button-8" type="submit" value="Comment" style="margin-left:165px; margin-top: 10px;">
+      </form>
+      {% endif %}
+        {% endif %}
+
+      <style>
+        .button-8 {      
+      background-color: #fde3e9;
+      border-radius: 3px;
+      border: 1px solid #7aa7c7;
+      box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+      box-sizing: border-box;
+      color: #39739d;
+      cursor: pointer;
+      display: inline-block;
+      font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.15385;
+      margin: 0;
+      outline: none;
+      padding: 8px .8em;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: baseline;
+      white-space: nowrap;
+    }
+    
+    .button-8:hover,
+    .button-8:focus {
+      background-color: #b3d3ea;
+      color: #2c5777;
+    }
+    
+    .button-8:focus {
+      box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+    }
+    
+    .button-8:active {
+      background-color: #a0c7e4;
+      box-shadow: none;
+      color: #2c5777;
+    }
+       </style>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthumbs.dreamstime.com%2Fz%2Fwheel-car-isolated-icon-design-illustration-graphic-74193413.jpg&f=1&nofb=1" rel="icon">
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <style>
+            body{
+                background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGNhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-attachment: fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
+        <nav class="border navbar navbar-expand-md navbar-light" style="background-color: #fde3e9;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><h1 style="font-size: 39px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Auctions</h1></a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div style="margin-top: 6px;">
+                    {% if user.is_authenticated %}
+                        Welcome Back! <a href="/" style="color:blue; font-weight: bold;">@{{ user.username }}</a>.
+                    {% else %}
+                        Not signed in.
+                    {% endif %}
+                </div>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav ms-auto mt-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}" style="margin-left: 10px;">Active Listings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category' %}" style="margin-left: 10px;">Categories</a>
+                    </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                   <ul class="navbar-nav ms-auto mt-2">
+                       <li class="nav-item">
+                           <a class="nav-link" href="{% url 'listing' %}">Create Listing</a>
+                       </li>
+                       </ul>
+
+                       <ul class="navbar-nav ms-auto mt-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
+                        </li>
+                        </ul>
+    
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <a class="nav-link" style="margin-left: 400px;" href="{% url 'logout' %}">Log Out</a>
+                        </ul>
+                    {% else %}
+                    <ul class="navbar-nav ms-auto mt-2">
+                        <li class="nav-item">
+                            <a class="nav-link" style="margin-left: 600px;" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        <hr>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
